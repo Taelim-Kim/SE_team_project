@@ -1,0 +1,94 @@
+package se;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+class createAccountPanel extends JPanel{ //MainFrame 소속
+	JLabel createAccountLabel = new JLabel("create Account"); //맨위 라벨
+	
+	JPanel totalPanel = new JPanel(); //아래 두개 합친 패널
+	JPanel checkedUserPanel = new JPanel(); //본인확인 패널
+	JPanel accountInfoPanel = new JPanel(); //생성패널
+	JPanel BtnPanel = new JPanel(); //뒤로가기,생성버튼 패널
+	
+	JButton backBtn = new JButton("취소"); //뒤로가기버튼
+	JButton createBtn = new JButton("생성"); //생성버튼
+	
+	JPanel userInfoPanel = new JPanel(); //이름 전번 주민 합칠패널
+	JPanel userInfoFieldPanel = new JPanel(); //이름 전번 주민 필드 합칠패널
+	JLabel nameLabel = new JLabel("이         름"); //이름
+	JLabel phoneNumberLabel = new JLabel("전화번호"); //전번
+	JLabel resisterNumberLabel = new JLabel("주민번호"); //주민
+	JTextField nameField = new JTextField(10); 
+	JTextField phoneNumberField = new JTextField(10);
+	JTextField resisterNumberField = new JTextField(10);
+	JButton userCheckBtn = new JButton("본인확인");
+	
+	JPanel accountPasswdPanel = new JPanel(); //계좌번호,비번 합칠패널
+	JPanel accountPasswdFieldPanel = new JPanel(); //계좌번호,비번의 필드를 합칠 패널
+	JLabel accountNumberLabel = new JLabel("계좌번호"); //계좌번호
+	JLabel passwdLabel = new JLabel("비밀번호"); //비번
+	JLabel checkedPasswdLabel = new JLabel("비밀번호재입력"); //비번확인
+	JTextField accountNumberField = new JTextField(10); 
+	JTextField passwdField = new JTextField(10);
+	JTextField checkedPasswdField = new JTextField(10);
+	JButton reCreate = new JButton("재 생 성"); //계좌번호,비밀번호 재생성버튼
+	
+	JPanel hobbyPanel = new JPanel(); //흥미 부분
+	
+	createAccountPanel(){
+	
+		setLayout(new BorderLayout());
+		add(createAccountLabel,BorderLayout.NORTH);
+		createAccountLabel.setHorizontalAlignment(JLabel.CENTER); //라벨 중앙정렬
+		add(totalPanel,BorderLayout.CENTER);
+		
+		totalPanel.setLayout(new BoxLayout(totalPanel,BoxLayout.Y_AXIS));
+		totalPanel.add(checkedUserPanel); //전체 프레임 에드
+		totalPanel.add(accountInfoPanel);
+		totalPanel.add(BtnPanel);
+		
+		//뒤로가기, 생성버튼 패널
+		BtnPanel.add(backBtn);
+		BtnPanel.add(createBtn);
+		
+		//이름전화번호주민번호 부분 패널
+		checkedUserPanel.setLayout(new GridLayout(0,3)); //흠 .... 
+		checkedUserPanel.add(userInfoPanel);
+		checkedUserPanel.add(userInfoFieldPanel);
+		checkedUserPanel.add(userCheckBtn);
+		
+		userInfoPanel.setLayout(new GridLayout(3, 0));
+		userInfoPanel.add(nameLabel);
+		userInfoPanel.add(phoneNumberLabel);
+		userInfoPanel.add(resisterNumberLabel);
+		
+		userInfoFieldPanel.setLayout(new GridLayout(3, 0));
+		userInfoFieldPanel.add(nameField);
+		userInfoFieldPanel.add(phoneNumberField);
+		userInfoFieldPanel.add(resisterNumberField);
+		
+		//계좌번호 비밀번호 부분패널
+		accountInfoPanel.setLayout(new GridLayout(0, 3));
+		accountInfoPanel.add(accountPasswdPanel);
+		accountInfoPanel.add(accountPasswdFieldPanel);
+		accountInfoPanel.add(reCreate); //재생성버튼
+		accountInfoPanel.add(hobbyPanel);	//흥미
+		
+		accountPasswdPanel.setLayout(new GridLayout(3, 0));
+		accountPasswdPanel.add(accountNumberLabel);
+		accountPasswdPanel.add(passwdLabel);
+		accountPasswdPanel.add(checkedPasswdLabel);
+		
+		accountPasswdFieldPanel.setLayout(new GridLayout(3, 0));
+		accountPasswdFieldPanel.add(accountNumberField);
+		accountPasswdFieldPanel.add(passwdField);
+		accountPasswdFieldPanel.add(checkedPasswdField);
+	}
+}

@@ -1,0 +1,87 @@
+package se;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+class atmPanel extends JPanel { // MainFrame 소속
+	JLabel welcomeLabel = new JLabel("Welcome to National Korean Bank [ ATM ]");
+	
+	JButton cashOut = new JButton("Cash Out");	//출급
+	JButton cashIn = new JButton("Cash In");	//입금		
+	JButton cashMove = new JButton("Cash Transfer");	//계좌이체
+	JButton useCash = new JButton("Usage");	//사용내역
+	JButton checkCash = new JButton("checkCash");	//잔액확인
+	
+	JPanel mixedPanel = new JPanel(); //atmPanel의 하부 모든 기능을 넣을 패널
+	JPanel funcPanel = new JPanel(); //입금,출금,계좌이체,사용내역,잔액확인
+	JPanel imagePanel = new JPanel(); //이미지 패널
+	JPanel crtAccountPanel = new JPanel(); //계좌 생성 패널
+	
+	Border border = BorderFactory.createTitledBorder(""); // 테두리추가
+
+	
+	JButton createAccountBtn = new JButton("createAccount"); //계좌생성버튼
+	
+	createAccountPanel cap = null;
+	atmPanel() {
+		setLayout(new BorderLayout());
+		welcomeLabel.setHorizontalAlignment(JLabel.CENTER); //라벨 중앙정렬
+		add(welcomeLabel,BorderLayout.NORTH);
+		add(mixedPanel,BorderLayout.CENTER);
+		
+		//funcPanel.setBorder(border);
+		imagePanel.setBorder(border);
+		//crtAccountPanel.setBorder(border);
+		
+		mixedPanel.setLayout(new BorderLayout()); //아랫부분 패널을 3열로
+		mixedPanel.add(funcPanel,BorderLayout.WEST);
+		mixedPanel.add(imagePanel,BorderLayout.CENTER);
+		mixedPanel.add(crtAccountPanel,BorderLayout.EAST);
+		
+		funcPanel.setLayout(new GridLayout(8,0));
+		funcPanel.add(cashIn);
+		funcPanel.add(cashOut);
+		funcPanel.add(cashMove);
+		funcPanel.add(useCash);
+		funcPanel.add(checkCash);
+		
+		//imagePanel 이미지부분
+		
+		crtAccountPanel.setLayout(new GridLayout(8,0));
+		crtAccountPanel.add(createAccountBtn);
+		
+		cashOut.addMouseListener(new CashoutClicked());
+		cashIn.addMouseListener(new CashinClicked());	
+		
+	}
+
+	private class CashoutClicked extends MouseAdapter {
+		public void mouseClicked(MouseEvent c) {
+			if(c.getSource() == cashOut){
+				if(SE.smartState == true){
+					System.out.println("10000원이 출금 되었습니다.");
+					SE.spf.message(10000);
+				}
+			}
+		}
+	}
+	private class CashinClicked extends MouseAdapter{
+		public void mouseClicked(MouseEvent c) {
+			if(c.getSource() == cashIn){
+				if(SE.smartState == true){
+					System.out.println("10000원이 입금 되었습니다.");
+					SE.spf.message(10000);
+				}
+			}
+		}
+	}
+}

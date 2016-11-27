@@ -1,0 +1,70 @@
+package se;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+class shopPanel extends JPanel{ //MainFrame 소속
+	JLabel shop = new JLabel("SHOP");
+	
+	JPanel totalPanel = new JPanel();
+	JPanel imagePanel = new JPanel();
+	JPanel paymentPanel = new JPanel();
+	JPanel shopItemsPanel = new JPanel();
+	JPanel payPanel = new JPanel();
+	
+	JComboBox shopList = new JComboBox(); //상점목록 콤보박스
+	JPanel itemsPanel = new JPanel(); //물품&가격 리스트 대신 패널
+	
+	JPanel payList = new JPanel(); //내역
+	JButton paymentBtn = new JButton("Buy"); //결제 버튼
+	
+	Border border = BorderFactory.createTitledBorder(""); // 테두리추가
+	
+	shopPanel(){
+		setLayout(new BorderLayout());
+		add(shop,BorderLayout.NORTH);
+		shop.setHorizontalAlignment(JLabel.CENTER); //라벨 중앙정렬
+		add(totalPanel,BorderLayout.CENTER);
+		
+		totalPanel.setLayout(new GridLayout(2,0));
+		totalPanel.add(imagePanel);
+		imagePanel.setBorder(border); //이미지 부분 표시용
+		totalPanel.add(paymentPanel);
+		
+		paymentPanel.setLayout(new BorderLayout());
+		paymentPanel.add(shopItemsPanel,BorderLayout.CENTER);
+		paymentPanel.add(payPanel,BorderLayout.EAST);
+		
+		shopItemsPanel.setLayout(new BorderLayout());
+		shopItemsPanel.add(shopList,BorderLayout.NORTH);
+		shopItemsPanel.add(itemsPanel,BorderLayout.CENTER);
+		itemsPanel.setBorder(border); //물품가격 표시용
+		
+		payPanel.setLayout(new BorderLayout());
+		payPanel.add(payList,BorderLayout.CENTER);
+		payList.setBorder(border); //내역 표시용
+		payPanel.add(paymentBtn,BorderLayout.SOUTH);
+		
+		paymentBtn.addMouseListener(new BuyClicked());
+	}
+	
+	private class BuyClicked extends MouseAdapter{
+		public void mouseClicked(MouseEvent e) {
+			if(e.getSource() == paymentBtn){
+				if(SE.smartState == true){ //스마트폰이 열려있어야 한다.
+					System.out.println("2000원이 결제되었습니다.");
+					SE.spf.message(2000); //스마트폰에 결제 정보 넘김
+				}
+			}
+		}
+	}
+}
