@@ -2,7 +2,6 @@ package se;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,15 +12,18 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 
 
 class SmartPhoneFrame extends JFrame implements ActionListener{ //스마트폰 프레임, 메뉴에서 킬 수 있다.
-	private CardLayout cardLayout = new CardLayout(10, 10);
-	SmartPhonePanel spPanel = new SmartPhonePanel();
+	CardLayout cardLayout = new CardLayout(10, 10);
+	SmartPhonePanel spPanel = new SmartPhonePanel(); //스마트폰 화면
+	
 	JPanel accessPanel = new JPanel(); //접속하는 패널
 	JLabel smartPhoneLabel = new JLabel("Android");
 	JPanel labelPanel = new JPanel();
@@ -30,8 +32,9 @@ class SmartPhoneFrame extends JFrame implements ActionListener{ //스마트폰 프레�
 	
 	JPanel totalPanel = new JPanel(); //가운데부분 전체
 	JPanel fieldPanel = new JPanel();
+	
 	JTextField idField = new JTextField(8);
-	JTextField passwdField = new JTextField(8);
+	JPasswordField passwdField = new JPasswordField(8);
 	JButton accessBtn = new JButton("접속");
 	
 	Border border = BorderFactory.createTitledBorder("");
@@ -77,22 +80,27 @@ class SmartPhoneFrame extends JFrame implements ActionListener{ //스마트폰 프레�
 		setVisible(true);
 	}
 	
-
 	void closeSmart(){ //메인 프레임의 메뉴에서 사용해서 밖으로 빼놨음
 		SE.smartState(false); //스마트폰 프레임 상태, 같은 패키지 SE의 메소드 사용
+		SE.smartLoginState(false); //스마트폰 로그아웃
+		SE.smartInterworkState(false); //스마트폰 연동 끊기
 		SE.mf.openSmart.setState(false); //메인프레임 메뉴 open
 		dispose(); //dispose = 지정 프레임 종료, exit = 모든 프레임 종료
 	}
 	
-	void message(int money){ //shopPanel에서 결제시 사용
-		System.out.println(money + " 팝업!");
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) { //접속 버튼 이벤트, 고객 정보 확인하기 -> 접속 허용/불허용
 		if(e.getSource() == accessBtn){
-			if(SE.smartState == true){
+			boolean info = SE.checkUserInfo(idField.getText(), passwdField.getText(), true); //고객 정보 확인
+			
+			if(info == true){
+				idField.setText(""); //초기화 시켜주기
+				passwdField.setText(""); //초기화 시켜주기
+				
 				cardLayout.show(getContentPane(), "smartPhone"); //화면 바꾸기
+			}
+			else{ //접속 실패 알림
+				passwdField.setText(""); //초기화 시켜주기
+				JOptionPane.showMessageDialog(this, "아이디 또는 비밀번호를 다시 입력해 주세요", "로그인 오류", JOptionPane.WARNING_MESSAGE);
 			}
 		}
 	}

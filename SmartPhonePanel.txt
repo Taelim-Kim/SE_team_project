@@ -2,14 +2,18 @@ package se;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class SmartPhonePanel extends JPanel {
+class SmartPhonePanel extends JPanel { //스마트폰 접속 프레임, 개인 정보와 혜택 등을 볼 수 있다.
 	JLabel smartPhoneLabel = new JLabel("Android");
 	JPanel totalPanel = new JPanel(); //잔액,계좌번호,혜택
 	JPanel pictogramPanel = new JPanel(); //픽토그램
@@ -20,13 +24,18 @@ public class SmartPhonePanel extends JPanel {
 	
 	JButton bankBtn = new JButton("은행");
 	JButton homeBtn = new JButton("HOME");
-	JButton userBtn = new JButton("연동");
+	static JButton interworkBtn = new JButton("연동하기"); //SE에서 사용
 	
 	Border balanceBorder = BorderFactory.createTitledBorder("잔액");
 	Border acoountBorder = BorderFactory.createTitledBorder("계좌");
 	Border benefitBorder = BorderFactory.createTitledBorder("혜택");
 	
-	public SmartPhonePanel() {
+	static JLabel userName = new JLabel("고객 명"); 
+	static JLabel userAccountNumber = new JLabel("계좌 번호"); 
+	static JLabel balanceLabel = new JLabel("잔액"); 
+	static JLabel benefit = new JLabel("혜택");
+	
+	public SmartPhonePanel(){
 		setLayout(new BorderLayout());
 		add(smartPhoneLabel,BorderLayout.NORTH);
 		smartPhoneLabel.setHorizontalAlignment(JLabel.CENTER); //라벨 중앙정렬
@@ -42,13 +51,49 @@ public class SmartPhonePanel extends JPanel {
 		accountNumberPanel.setBorder(acoountBorder);
 		benefitPanel.setBorder(benefitBorder);
 		
-		balancePanel.add(new JLabel("잔액나와라뚝딱"));
-		accountNumberPanel.add(new JLabel("계좌나와라뚝딱"));
-		benefitPanel.add(new JLabel("오늘의 혜택은 무언가아"));
+		balancePanel.add(balanceLabel);
+		accountNumberPanel.add(userAccountNumber);
+		benefitPanel.add(benefit);
+		
+		homeBtn.addActionListener(new ActionListener(){ //홈 버튼
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == homeBtn){
+					System.out.println("누름");
+					
+					//SE.spf.cardLayout.first(SE.spf); //빠알게에
+					//SE.spf = new SmartPhoneFrame(); //이건 하나가 더생김
+					//SmartPhoneFrame.cardLayout.first(SmartPhoneFrame);
+					//SE.smartLoginState(false); //로그인 끊기
+					
+					//SE.moveToHome(); //홈 화면으로 바꾸기
+				}
+			}
+		});
+		
+		interworkBtn.addActionListener(new ActionListener(){ //연동 버튼
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == interworkBtn){
+					if(SE.smartInterworkState == false){ //연동 안한 상태 -> 연동하기
+						SE.smartInterworkState(true);
+					}
+					else{ //연동한 상태 -> 연동 끊기
+						SE.smartInterworkState(false);
+					}
+				}
+			}
+		});
 		
 		pictogramPanel.add(bankBtn);
 		pictogramPanel.add(homeBtn);
-		pictogramPanel.add(userBtn);
+		pictogramPanel.add(interworkBtn);
 	}
-
+	
+	static void setData(){ //개인 정보 설정 갱신
+		userName.setText(SE.userNameSmart);
+		userAccountNumber.setText(SE.userAccountNumberSmart); 
+		balanceLabel.setText(SE.balanceSmart + ""); 
+		benefit.setText(SE.benefitSmart);
+	}
 }
+
+
